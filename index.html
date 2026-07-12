@@ -239,9 +239,10 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(255, 240, 245, 0.95);
+            background-color: rgba(255, 240, 245, 0.96);
             z-index: 100;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             opacity: 0;
@@ -254,41 +255,43 @@
             pointer-events: auto;
         }
 
+        /* Glowing Container for the heart frame */
         .heart-frame-container {
-            position: relative;
             width: 320px;
             height: 320px;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             transform: scale(0.5);
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 10px 20px rgba(255, 20, 147, 0.3));
         }
 
         .animation-overlay.active .heart-frame-container {
             transform: scale(1);
         }
 
-        /* The Heart Shape frame cutout using clip-path */
-        .heart-frame {
-            width: 280px;
-            height: 280px;
-            background-color: #ff1493;
-            clip-path: path('M12 4.419C12.424 4.053 17.566 0 24 0c6.766 0 12 5.333 12 12 0 7.625-5.836 13.922-22.193 23.356L12 36 10.193 34.974C3.836 25.922 0 19.625 0 12 0 5.333 5.234 0 12 0c6.434 0 11.576 4.053 12 4.419z');
-            transform: scale(7.5); /* Scale up the 36px path layout to fit frame size */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
-            animation: pulse 2s infinite ease-in-out;
+        /* The Heart Framed Photo using a reliable SVG mask approach */
+        .animated-photo {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            background-color: #ff69b4;
+            /* Reliable heart shapes via SVG path standard masking */
+            -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            -webkit-mask-size: 100% 100%;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            animation: pulseHeart 2s infinite ease-in-out;
         }
 
-        .animated-photo {
-            width: 90%;
-            height: 90%;
-            object-fit: cover;
-            /* Invert clip path scaling logic to keep the image looking normal inside it */
-            border-radius: 4px;
+        @keyframes pulseHeart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
         }
 
         /* Floating Falling Hearts Container */
@@ -308,6 +311,7 @@
             font-size: 24px;
             animation: fall linear forwards;
             opacity: 0.8;
+            z-index: 101;
         }
 
         @keyframes fall {
@@ -322,8 +326,7 @@
         }
 
         .close-instruction {
-            position: absolute;
-            bottom: 40px;
+            margin-top: 30px;
             font-size: 14px;
             color: #ff1493;
             font-weight: 600;
@@ -333,6 +336,7 @@
             border: 2px solid #ffb6c1;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             cursor: pointer;
+            z-index: 105;
         }
     </style>
 </head>
@@ -399,10 +403,8 @@
         <div class="falling-hearts-container" id="heartsContainer"></div>
         
         <div class="heart-frame-container">
-            <div class="heart-frame">
-                <!-- Javascript will change this source based on what she clicks -->
-                <img src="1.jpg" alt="Zoomed View" class="animated-photo" id="targetPopupImage">
-            </div>
+            <!-- The photo inside the heart mask -->
+            <img src="1.jpg" alt="Zoomed View" class="animated-photo" id="targetPopupImage">
         </div>
 
         <div class="close-instruction">Tap anywhere to close ✨</div>
