@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Messages ❤️</title>
+    <title>For My Barbie 💖</title>
     <style>
         * {
             margin: 0;
@@ -13,24 +13,26 @@
         }
 
         body {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: #ffeef2;
+            color: #4a0e17;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Instagram Chat Container */
+        /* Chat Container - Barbie Edition */
         .chat-container {
             width: 100%;
             max-width: 450px;
             height: 100vh;
-            background-color: #000000;
+            background-color: #ffffff;
             display: flex;
             flex-direction: column;
-            border-left: 1px solid #262626;
-            border-right: 1px solid #262626;
+            border-left: 1px solid #ffccd7;
+            border-right: 1px solid #ffccd7;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.15);
         }
 
         /* Top Header */
@@ -38,10 +40,10 @@
             display: flex;
             align-items: center;
             padding: 14px 16px;
-            border-bottom: 1px solid #262626;
+            border-bottom: 1px solid #ffccd7;
             position: sticky;
             top: 0;
-            background-color: #000000;
+            background-color: #ffffff;
             z-index: 10;
         }
 
@@ -49,13 +51,14 @@
             font-size: 24px;
             margin-right: 15px;
             cursor: pointer;
+            color: #ff4081;
         }
 
         .profile-pic {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ffb6c1);
             padding: 2px;
             margin-right: 12px;
         }
@@ -65,7 +68,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            border: 2px solid black;
+            border: 2px solid white;
         }
 
         .user-info {
@@ -75,17 +78,19 @@
         .username {
             font-weight: 600;
             font-size: 16px;
+            color: #ff1493;
         }
 
         .status {
             font-size: 12px;
-            color: #a8a8a8;
+            color: #ff85a2;
         }
 
         .header-icons {
             display: flex;
             gap: 18px;
             font-size: 20px;
+            color: #ff4081;
         }
 
         /* Message Area */
@@ -96,6 +101,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            background: linear-gradient(to bottom, #ffffff, #fff0f5);
         }
 
         /* Chat Bubbles */
@@ -103,11 +109,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            max-width: 75%;
-        }
-
-        .message-group.incoming {
-            align-self: flex-start;
+            max-width: 78%;
         }
 
         .message-group.outgoing {
@@ -123,60 +125,79 @@
             word-wrap: break-word;
         }
 
-        .incoming .bubble {
-            background-color: #262626;
-            color: #ffffff;
-        }
-
         .outgoing .bubble {
-            background: linear-gradient(45deg, #3897f0, #a154ff);
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
             color: #ffffff;
+            box-shadow: 0 2px 8px rgba(255, 20, 147, 0.2);
         }
 
-        /* Image Display styled like a collage/sent multiple photos */
+        /* Interactive Photo Grid */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4px;
+            gap: 6px;
             border-radius: 16px;
             overflow: hidden;
             max-width: 300px;
             margin-top: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
+            border: 3px solid #ffb6c1;
         }
 
         .photo-grid img {
             width: 100%;
-            height: 150px;
+            height: 140px;
             object-fit: cover;
-            transition: transform 0.2s;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
 
         .photo-grid img:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* Click Me Prompt Hint */
+        .click-hint {
+            font-size: 12px;
+            color: #ff1493;
+            font-weight: 600;
+            margin-bottom: 8px;
+            animation: pulse 1.5s infinite;
+            text-align: right;
+            width: 100%;
+            padding-right: 5px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 5px rgba(255,20,147,0.4); }
+            100% { transform: scale(1); opacity: 0.8; }
         }
 
         /* Time Stamp */
         .timestamp {
             font-size: 11px;
-            color: #a8a8a8;
+            color: #ff85a2;
             margin: 15px 0 5px 0;
             text-align: center;
             width: 100%;
             letter-spacing: 0.5px;
+            font-weight: 600;
         }
 
-        /* Fake Bottom Input Bar */
+        /* Bottom Footer */
         .chat-footer {
             padding: 12px 16px;
-            background-color: #000000;
+            background-color: #ffffff;
+            border-top: 1px solid #ffccd7;
         }
 
         .input-bar {
             display: flex;
             align-items: center;
-            background-color: #000000;
-            border: 1px solid #363636;
+            background-color: #fff5f7;
+            border: 1px solid #ffb6c1;
             border-radius: 25px;
             padding: 8px 16px;
             width: 100%;
@@ -185,19 +206,132 @@
         .input-bar input {
             background: none;
             border: none;
-            color: white;
+            color: #4a0e17;
             flex-grow: 1;
             outline: none;
             font-size: 15px;
         }
 
         .input-bar input::placeholder {
-            color: #737373;
+            color: #ffb6c1;
         }
 
         .heart-icon {
-            color: #ff3040;
+            color: #ff1493;
             font-size: 20px;
+            cursor: pointer;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.2); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.15); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        /* ROMANTIC ANIMATION OVERLAY */
+        .animation-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(255, 240, 245, 0.95);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .animation-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .heart-frame-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: scale(0.5);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .animation-overlay.active .heart-frame-container {
+            transform: scale(1);
+        }
+
+        /* The Heart Shape frame cutout using clip-path */
+        .heart-frame {
+            width: 280px;
+            height: 280px;
+            background-color: #ff1493;
+            clip-path: path('M12 4.419C12.424 4.053 17.566 0 24 0c6.766 0 12 5.333 12 12 0 7.625-5.836 13.922-22.193 23.356L12 36 10.193 34.974C3.836 25.922 0 19.625 0 12 0 5.333 5.234 0 12 0c6.434 0 11.576 4.053 12 4.419z');
+            transform: scale(7.5); /* Scale up the 36px path layout to fit frame size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .animated-photo {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            /* Invert clip path scaling logic to keep the image looking normal inside it */
+            border-radius: 4px;
+        }
+
+        /* Floating Falling Hearts Container */
+        .falling-hearts-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .falling-heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 24px;
+            animation: fall linear forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .close-instruction {
+            position: absolute;
+            bottom: 40px;
+            font-size: 14px;
+            color: #ff1493;
+            font-weight: 600;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 2px solid #ffb6c1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             cursor: pointer;
         }
     </style>
@@ -209,12 +343,11 @@
         <div class="chat-header">
             <span class="back-btn">‹</span>
             <div class="profile-pic">
-                <!-- Fallback to a placeholder icon if 1.jpg isn't her profile picture -->
                 <img src="1.jpg" alt="Profile">
             </div>
             <div class="user-info">
-                <div class="username">My Favorite Person ❤️</div>
-                <div class="status">Active now</div>
+                <div class="username">My Barbie Doll 💖</div>
+                <div class="status">Always on my mind</div>
             </div>
             <div class="header-icons">
                 <span>📞</span>
@@ -225,33 +358,29 @@
         <!-- Messages Area -->
         <div class="chat-messages">
             
-            <div class="timestamp">TODAY</div>
+            <div class="timestamp">OUR MONTHSARY</div>
 
             <!-- Outgoing message: From You -->
             <div class="message-group outgoing">
-                <div class="bubble">Happy Monthsary, beautiful! I made something small for you.</div>
-                <div class="bubble">Can't believe how lucky I am to have you. Here are a few of my favorite memories of us recently...</div>
+                <div class="bubble">Happy Monthsary, beautiful! I made this custom space just for you. 🥰</div>
+                <div class="bubble">Every moment with you feels like a dream. Look at some of my favorite memories right here...</div>
             </div>
 
-            <!-- The Photo Gallery Block inside the chat -->
+            <!-- Photo gallery segment -->
             <div class="message-group outgoing" style="max-width: 300px;">
                 <div class="photo-grid">
-                    <img src="1.jpg" alt="Memory 1">
-                    <img src="2.jpg" alt="Memory 2">
-                    <img src="3.jpg" alt="Memory 3">
-                    <img src="4.jpg" alt="Memory 4">
+                    <img src="1.jpg" alt="Memory 1" onclick="openAnimation('1.jpg')">
+                    <img src="2.jpg" alt="Memory 2" onclick="openAnimation('2.jpg')">
+                    <img src="3.jpg" alt="Memory 3" onclick="openAnimation('3.jpg')">
+                    <img src="4.jpg" alt="Memory 4" onclick="openAnimation('4.jpg')">
                 </div>
+                <div class="click-hint">Tap a photo to reveal a secret memory ✨</div>
             </div>
 
-            <!-- Incoming fake message: Representing her response/vibe -->
-            <div class="message-group incoming">
-                <div class="bubble">Oh my gosh, what is this?! 🥺❤️</div>
-            </div>
-
-            <!-- Outgoing message: The actual Letter split into bubbles -->
+            <!-- Outgoing message: The continuation of your love letter -->
             <div class="message-group outgoing">
-                <div class="bubble">Every day with you gets better and better. Thank you for always being my rock, my laugh, and my absolute best friend.</div>
-                <div class="bubble">I love you more than words can say. To many more months and memories together! 🥂✨</div>
+                <div class="bubble">Thank you for bringing so much color, sparkle, and happiness into my life. You make everything better just by being you.</div>
+                <div class="bubble">I love you entirely, to the moon and back! Happy Monthsary! 💖🥂🎉</div>
             </div>
 
         </div>
@@ -259,11 +388,82 @@
         <!-- Footer Input -->
         <div class="chat-footer">
             <div class="input-bar">
-                <input type="text" placeholder="Message..." readonly>
+                <input type="text" placeholder="Sending you all my love..." readonly>
                 <span class="heart-icon">❤️</span>
             </div>
         </div>
     </div>
+
+    <!-- FULLSCREEN INTERACTIVE ROMANTIC POPUP ANIMATION -->
+    <div class="animation-overlay" id="animationOverlay" onclick="closeAnimation()">
+        <div class="falling-hearts-container" id="heartsContainer"></div>
+        
+        <div class="heart-frame-container">
+            <div class="heart-frame">
+                <!-- Javascript will change this source based on what she clicks -->
+                <img src="1.jpg" alt="Zoomed View" class="animated-photo" id="targetPopupImage">
+            </div>
+        </div>
+
+        <div class="close-instruction">Tap anywhere to close ✨</div>
+    </div>
+
+    <script>
+        let heartInterval;
+
+        function openAnimation(imageSrc) {
+            const overlay = document.getElementById('animationOverlay');
+            const popupImg = document.getElementById('targetPopupImage');
+            const heartsContainer = document.getElementById('heartsContainer');
+            
+            // Set the clicked image into the popup frame
+            popupImg.src = imageSrc;
+            
+            // Clear out any old hearts
+            heartsContainer.innerHTML = '';
+            
+            // Turn overlay on
+            overlay.classList.add('active');
+            
+            // Start spawning floating hearts continuously
+            heartInterval = setInterval(spawnHeart, 150);
+            
+            // Make a big batch right away at launch
+            for(let i=0; i<15; i++) {
+                setTimeout(spawnHeart, i * 80);
+            }
+        }
+
+        function closeAnimation() {
+            const overlay = document.getElementById('animationOverlay');
+            overlay.classList.remove('active');
+            clearInterval(heartInterval);
+        }
+
+        function spawnHeart() {
+            const container = document.getElementById('heartsContainer');
+            if (!container || !document.getElementById('animationOverlay').classList.contains('active')) return;
+            
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            
+            // Pick a random pink colored heart icon variant
+            const heartTypes = ['❤️', '💖', '💝', '💕', '💗', '✨'];
+            heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+            
+            // Randomize spatial attributes across screen widths
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's'; // 2s to 4s
+            heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
+            
+            container.appendChild(heart);
+            
+            // Remove from DOM once animation loop completes
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+    </script>
 
 </body>
 </html>
