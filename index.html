@@ -428,17 +428,17 @@
         // Initialize the YouTube Player automatically via the API
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: 'dFp_b5DPIIo', // The music track video ID
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'dFp_b5DPIIo'
-                }
-            });
+        height: '0',
+        width: '0',
+        videoId: 'xl4hYsHUk9s', // 👈 Updated to your new video ID
+        playerVars: {
+            'autoplay': 0,
+            'controls': 0,
+            'loop': 1,
+            'playlist': 'xl4hYsHUk9s' // 👈 Keeps the new audio looping perfectly
         }
+    });
+}
 
         function openAnimation(imageSrc) {
             const overlay = document.getElementById('animationOverlay');
