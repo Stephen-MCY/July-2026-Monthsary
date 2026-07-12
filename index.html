@@ -400,46 +400,101 @@
 
     <!-- FULLSCREEN INTERACTIVE ROMANTIC POPUP ANIMATION -->
     <div class="animation-overlay" id="animationOverlay" onclick="closeAnimation()">
+        <!-- Hidden YouTube Embed Player -->
+        <div id="youtube-player" style="display: none;"></div>
+        
         <div class="falling-hearts-container" id="heartsContainer"></div>
         
-        <div class="heart-frame-container">
-            <!-- The photo inside the heart mask -->
-            <img src="1.jpg" alt="Zoomed View" class="animated-photo" id="targetPopupImage">
+        <div class="heart-frame-container" onclick="event.stopPropagation();">
+            <!-- The photo inside the heart mask with a smooth opacity fade for transitions -->
+            <img src="1.jpg" alt="Zoomed View" class="animated-photo" id="targetPopupImage" style="transition: opacity 0.5s ease; opacity: 1;">
         </div>
 
         <div class="close-instruction">Tap anywhere to close ✨</div>
     </div>
 
+    <!-- YouTube IFrame API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
         let heartInterval;
+        let slideshowInterval;
+        let player;
+        
+        // Array of your 4 repository photos
+        const photos = ['1.jpg', '2.jpg', '3.jpg', '4.jpg'];
+        let currentPhotoIndex = 0;
+
+        // Initialize the YouTube Player automatically via the API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'dFp_b5DPIIo', // The music track video ID
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'dFp_b5DPIIo'
+                }
+            });
+        }
 
         function openAnimation(imageSrc) {
             const overlay = document.getElementById('animationOverlay');
             const popupImg = document.getElementById('targetPopupImage');
             const heartsContainer = document.getElementById('heartsContainer');
             
-            // Set the clicked image into the popup frame
-            popupImg.src = imageSrc;
+            // Set starting image based on what she clicked
+            currentPhotoIndex = photos.indexOf(imageSrc);
+            if (currentPhotoIndex === -1) currentPhotoIndex = 0;
+            popupImg.src = photos[currentPhotoIndex];
             
-            // Clear out any old hearts
+            // Clear falling particles & display overlay
             heartsContainer.innerHTML = '';
-            
-            // Turn overlay on
             overlay.classList.add('active');
             
-            // Start spawning floating hearts continuously
-            heartInterval = setInterval(spawnHeart, 150);
+            // Play the music
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
             
-            // Make a big batch right away at launch
+            // Start the 3-second photo rotation loop with animation
+            clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(cyclePhotos, 3000);
+            
+            // Spawn background heart floating particles
+            clearInterval(heartInterval);
+            heartInterval = setInterval(spawnHeart, 150);
             for(let i=0; i<15; i++) {
                 setTimeout(spawnHeart, i * 80);
             }
         }
 
+        function cyclePhotos() {
+            const popupImg = document.getElementById('targetPopupImage');
+            
+            // Advance index
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            
+            // Smooth cross-fade transition
+            popupImg.style.opacity = 0;
+            setTimeout(() => {
+                popupImg.src = photos[currentPhotoIndex];
+                popupImg.style.opacity = 1;
+            }, 500); // Wait for the fade-out to complete before changing source
+        }
+
         function closeAnimation() {
             const overlay = document.getElementById('animationOverlay');
             overlay.classList.remove('active');
+            
+            // Stop timelines and music execution
             clearInterval(heartInterval);
+            clearInterval(slideshowInterval);
+            if (player && typeof player.pauseVideo === 'function') {
+                player.pauseVideo();
+            }
         }
 
         function spawnHeart() {
@@ -449,23 +504,17 @@
             const heart = document.createElement('div');
             heart.classList.add('falling-heart');
             
-            // Pick a random pink colored heart icon variant
             const heartTypes = ['❤️', '💖', '💝', '💕', '💗', '✨'];
             heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
             
-            // Randomize spatial attributes across screen widths
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 2) + 's'; // 2s to 4s
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
             
             container.appendChild(heart);
             
-            // Remove from DOM once animation loop completes
-            setTimeout(() => {
-                heart.remove();
-            }, 4000);
+            setTimeout(() => { heart.remove(); }, 4000);
         }
     </script>
-
 </body>
 </html>
